@@ -1,18 +1,24 @@
 package main
 
 import (
+	"log"
+	"net/http"
+
 	"example.com/test/handler"
-	"github.com/labstack/echo/v4"
 )
 
 func main() {
-	e := echo.New()
+	router := http.NewServeMux()
+	router.HandleFunc("/", handler.GetHomePage)
+	router.HandleFunc("/click/open/", handler.GetBookingView)
 
-	e.GET("/", handler.GetHomePage)
-	e.GET("/click/open/:id", handler.GetBookingView)
+	router.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 
-	e.Static("/static", "static")
-	e.Static("/css", "css")
+	server := &http.Server{
+		Addr:    ":8080",
+		Handler: router,
+	}
 
-	e.Start(":8080")
+	log.Println("Server started at :8080")
+	server.ListenAndServe()
 }

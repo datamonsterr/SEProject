@@ -10,12 +10,11 @@ func isAvailable(i int, j int) bool {
 	return true
 }
 
-templ SeatEditor(row_number int, col_number int, id string) {
+templ SeatEditor(row_number int, col_number int) {
 	<div class="col-span-2 bg-black h-full" id="seat-editor">
 		<div class="h-full grid grid-cols-3 grid-rows-12">
 			<div class="font-bold text-xl row-span-1 col-span-full flex justify-between">
 				Movie Name
-				<span class="btn bg-black" hx-get={ fmt.Sprintf("/click/close/%s", id) } hx-swap="outerHTML" hx-target={ fmt.Sprintf("#%s", id) } hx-trigger="click">X</span>
 			</div>
 			<div class="row-span-10 col-span-2">
 				<div class="flex justify-end">
